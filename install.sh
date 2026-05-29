@@ -10,6 +10,7 @@ BRANCH="main"
 DEST="${1:-.}"
 
 TMP=$(mktemp -d)
+TMP=$(cd "$TMP" && pwd -P)
 trap 'rm -rf "$TMP"' EXIT
 
 echo "Downloading harness template..."
@@ -20,9 +21,10 @@ mkdir -p "$DEST"
 
 find "$TMP" -type f | while IFS= read -r src; do
   rel="${src#$TMP/}"
-  # skip the installer itself
+  # skip template meta files
   [ "$rel" = "install.sh" ] && continue
   [ "$rel" = "install.ps1" ] && continue
+  [ "$rel" = "README.md" ] && continue
 
   dst="$DEST/$rel"
   if [ -e "$dst" ]; then
