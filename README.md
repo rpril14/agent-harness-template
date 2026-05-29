@@ -97,14 +97,31 @@ Additional adapters for Codex or other agents can be added later without changin
 
 ## How To Start A New Project
 
-1. Copy this template into a new repository.
-2. Fill in `harness/PRODUCT.md`.
-3. Add project-specific terms to `harness/GLOSSARY.md`.
-4. Choose a stack and record it in `harness/docs/decisions/0001-project-baseline.md`.
-5. Update the `Stack` section in `harness/ARCHITECTURE.md`.
-6. Ask the active coding agent to scaffold the project according to its adapter and `harness/ARCHITECTURE.md`.
-7. Update `harness/scripts/verify` and `harness/scripts/verify.ps1` so they run the real project checks.
-8. Run verification before accepting generated work.
+### Install
+
+In an empty directory (or an existing project root):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/rpril14/agent-harness-template/main/install.sh | sh
+```
+
+To install into a named directory:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/rpril14/agent-harness-template/main/install.sh | sh -s -- my-project
+```
+
+The script downloads the template, copies files without overwriting anything that already exists, and prints next steps.
+
+### Setup
+
+1. Fill in `harness/PRODUCT.md`.
+2. Add project-specific terms to `harness/GLOSSARY.md`.
+3. Choose a stack and record it in `harness/docs/decisions/0001-project-baseline.md`.
+4. Update the `Stack` section in `harness/ARCHITECTURE.md`.
+5. Ask the active coding agent to scaffold the project according to its adapter and `harness/ARCHITECTURE.md`.
+6. Update `harness/scripts/verify` and `harness/scripts/verify.ps1` so they run the real project checks.
+7. Run verification before accepting generated work.
 
 ## Recommended First Prompt
 
