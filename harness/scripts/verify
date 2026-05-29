@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+set -eu
+
+# Harness integrity checks — always run regardless of project stack.
+
+required="
+harness/PRODUCT.md
+harness/ARCHITECTURE.md
+harness/GLOSSARY.md
+harness/TEST_MATRIX.md
+harness/ENFORCEMENT.md
+harness/SECURITY.md
+harness/PLANS.md
+harness/CLAUDE.md
+"
+
+failed=0
+
+for f in $required; do
+  if [ ! -f "$f" ]; then
+    echo "MISSING: $f"
+    failed=1
+  fi
+done
+
+# Warn on active plans that have no Acceptance Criteria section.
+for plan in harness/docs/plans/active/*.md; do
+  [ -f "$plan" ] || continue
+  [ "$(basename "$plan")" = ".gitkeep" ] && continue
+  if ! grep -q "## Acceptance Criteria" "$plan"; then
+    echo "WARN: active plan missing Acceptance Criteria -- $(basename "$plan")"
+  fi
+done
+
+if [ "$failed" -ne 0 ]; then
+  echo "Harness check failed. Restore missing files before continuing."
+  exit 1
+fi
+
+echo "Harness check passed."
+echo ""
+echo "No project stack has been scaffolded yet."
+echo "Update harness/scripts/verify after choosing a stack so this command runs format, lint, typecheck, test, and build checks."
