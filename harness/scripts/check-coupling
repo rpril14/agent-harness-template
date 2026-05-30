@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+set -eu
+
+coupling_file="harness/COUPLING.yaml"
+
+if [ ! -f "$coupling_file" ]; then
+  echo "WARN: $coupling_file not found — coupling check skipped."
+  exit 0
+fi
+
+changed=$(git diff HEAD --name-only 2>/dev/null) || changed=""
+if [ -z "$changed" ]; then
+  changed=$(git status --porcelain 2>/dev/null | awk '{print $2}') || changed=""
+fi
+
+non_harness=$(printf '%s\n' "$changed" | grep -v "^harness/" | grep . 2>/dev/null || true)
+
+if [ -z "$non_harness" ]; then
+  exit 0
+fi
+
+echo "Coupling check — non-harness files changed:"
+printf '%s\n' "$non_harness" | sed 's/^/  /'
+echo ""
+echo "Consult COUPLING.yaml and confirm all applicable rules are satisfied:"
+echo ""
+cat "$coupling_file"
+echo ""
+echo "If no coupling rules apply to this change, this reminder can be ignored."

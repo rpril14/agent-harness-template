@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NonInteractive -File harness/scripts/check-coupling.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking documentation coupling..."
+          }
+        ]
+      }
+    ]
+  }
+}

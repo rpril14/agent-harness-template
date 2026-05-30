@@ -40,5 +40,9 @@ if ($failed) {
 
 Write-Host "Harness check passed."
 Write-Host ""
+
+# Coupling reminder — echoes COUPLING.yaml when non-harness files are changed.
+& "$PSScriptRoot/check-coupling.ps1"
+
 Write-Host "No project stack has been scaffolded yet."
 Write-Host "Update harness/scripts/verify.ps1 after choosing a stack so this command runs format, lint, typecheck, test, and build checks."

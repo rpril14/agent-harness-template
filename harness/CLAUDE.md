@@ -25,6 +25,20 @@ Before making changes, read the relevant files:
 - When a rule is repeatedly violated, consider promoting it into enforcement using `ENFORCEMENT.md`.
 - Follow existing project conventions once the application stack is scaffolded.
 
+## Documentation Coupling
+
+After completing any code change, consult `COUPLING.yaml` to determine which harness documents must be updated.
+
+The coupling map defines: **if this event occurred → these files must be updated**.
+
+Common triggers:
+- Added a new module or source directory → update `ARCHITECTURE.md` and `GLOSSARY.md`
+- Introduced a new domain term or concept → update `GLOSSARY.md`
+- Changed module boundaries or dependencies → update `ARCHITECTURE.md`
+- Touched auth, secrets, or external integrations → update `SECURITY.md`
+
+The verify script will echo the coupling map as a reminder whenever non-harness files are modified.
+
 ## Planning
 
 Use an execution plan for complex features, significant refactors, architecture changes, data model changes, security-sensitive work, or tasks expected to take multiple steps.
@@ -59,6 +73,7 @@ If the project stack uses a platform-specific command, update `harness/scripts/v
 A task is done when:
 
 - The requested behavior is implemented.
+- Applicable coupling rules from `COUPLING.yaml` have been applied.
 - Relevant docs, glossary terms, or decisions are updated.
 - Required checks from `TEST_MATRIX.md` have been run or a reason is recorded.
 - Security-sensitive changes have been checked against `SECURITY.md`.

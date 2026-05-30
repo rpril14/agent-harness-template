@@ -39,5 +39,9 @@ fi
 
 echo "Harness check passed."
 echo ""
+
+# Coupling reminder — echoes COUPLING.yaml when non-harness files are changed.
+sh harness/scripts/check-coupling || true
+
 echo "No project stack has been scaffolded yet."
 echo "Update harness/scripts/verify after choosing a stack so this command runs format, lint, typecheck, test, and build checks."

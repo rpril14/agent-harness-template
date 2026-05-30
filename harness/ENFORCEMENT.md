@@ -58,6 +58,21 @@ Once the project has CI, CI should run the same default verify command used loca
 Avoid separate local and CI-only truth when possible.
 If CI needs extra checks, document them here and keep `harness/scripts/verify` as the local baseline.
 
+## Documentation Coupling Enforcement
+
+`harness/COUPLING.yaml` defines which harness documents must be updated when specific events occur
+(new module, new domain term, architecture change, security change, product change, bug fix).
+
+The verify script calls `harness/scripts/check-coupling` (or `.ps1` on Windows) after the harness
+integrity check. When non-harness files are modified, the script echoes the coupling map as a
+reminder checklist. Exit code is always 0 — this is an advisory reminder, not a hard block.
+
+A Claude Code Stop hook is configured in `.claude/settings.json` to run the same check at the end
+of every agent session, surfacing the coupling reminder before the agent stops.
+
+To harden this into a hard failure once the project matures, change the exit code in
+`harness/scripts/check-coupling` from `0` to `1` for uncovered coupling events.
+
 ## Enforcement Log
 
 Record durable enforcement decisions in `docs/decisions/`.

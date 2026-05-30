@@ -1,0 +1,37 @@
+# Harness coupling map.
+# When an event occurs, update all listed files before declaring work complete.
+# Consult this after completing any code change. The verify script echoes this
+# as a reminder whenever non-harness files are modified.
+
+coupling:
+  new_module:
+    description: A new module, package, service, or top-level source directory is added
+    must_update:
+      - harness/ARCHITECTURE.md
+      - harness/GLOSSARY.md
+
+  new_domain_term:
+    description: A new concept, entity, value object, or domain-specific term appears in code
+    must_update:
+      - harness/GLOSSARY.md
+
+  architecture_change:
+    description: Module boundaries, dependency relationships, or structural layers change
+    must_update:
+      - harness/ARCHITECTURE.md
+
+  security_change:
+    description: Auth, permissions, secrets, external input, storage, or integrations are touched
+    must_update:
+      - harness/SECURITY.md
+
+  product_requirement_change:
+    description: Scope, user flows, or acceptance criteria change
+    must_update:
+      - harness/PRODUCT.md
+      - harness/docs/product/acceptance-criteria.md
+
+  bug_fix:
+    description: A defect is corrected
+    must_update:
+      - harness/TEST_MATRIX.md  # add regression test entry if one was written
